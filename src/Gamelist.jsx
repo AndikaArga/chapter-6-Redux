@@ -36,7 +36,7 @@ export default function Gamelist() {
 
   return (
     <div className=" bg-transparent">
-      <div className="max-w-7xl mx-auto flex gap-8">
+      <div className="flex gap-8">
         <div className="flex flex-col flex-grow gap-4">
           <div className="text-2xl font-bold text-center rounded-md bg-[#333333]/75 text-white backdrop-blur-[20px]  py-2 shadow-lg">
             <span className="text-yellow-400">New</span> Releases

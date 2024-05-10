@@ -8,7 +8,7 @@ export default function UserPage() {
       <div className="fixed top-0 w-full z-50">
         <Navbar />
       </div>
-      <div className=" mt-20">
+      <div className="w-[80%] mx-auto mt-20">
         <Gamelist />
       </div>
     </div>
