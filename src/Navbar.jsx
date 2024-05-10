@@ -35,7 +35,7 @@ export default function Navbar() {
   }, [Token]);
 
   return (
-    <nav className="backdrop-blur-[20px] bg-[#333333]/75 flex justify-between items-center py-3 px-8  ">
+    <nav className=" bg-[#333333] flex justify-between items-center py-3 px-8  ">
       <div className="flex items-center">
         <button
           className="text-white px-4 py-2 font-bold hover:text-yellow-400 transition-colors duration-300"
