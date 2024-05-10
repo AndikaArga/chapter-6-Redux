@@ -5,6 +5,8 @@ import {
   setgameDetail,
   setgameFavorit,
 } from "../Reducers/gameReducer";
+const apiKey = import.meta.env.VITE_REACT_APP_RAPIDAPI_API;
+const apiHost = import.meta.env.VITE_REACT_APP_RAPIDAPI_HOST;
 
 export const getAllGames = () => async (dispatch, getState) => {
   try {
@@ -15,9 +17,8 @@ export const getAllGames = () => async (dispatch, getState) => {
           "sort-by": "release-date",
         },
         headers: {
-          "X-RapidAPI-Key":
-            "7ed3d33c1cmshbe8f8583a0efa6cp1629a1jsncf6bf4dabdb6",
-          "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": apiHost,
         },
       }
     );
@@ -41,9 +42,8 @@ export const getPopularGames = () => async (dispatch, getState) => {
           "sort-by": "popularity",
         },
         headers: {
-          "X-RapidAPI-Key":
-            "7ed3d33c1cmshbe8f8583a0efa6cp1629a1jsncf6bf4dabdb6",
-          "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": apiHost,
         },
       }
     );
@@ -67,9 +67,8 @@ export const getDetailGame = () => async (dispatch, getState) => {
       {
         params: { id: id },
         headers: {
-          "X-RapidAPI-Key":
-            "7ed3d33c1cmshbe8f8583a0efa6cp1629a1jsncf6bf4dabdb6",
-          "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": apiHost,
         },
       }
     );
@@ -93,9 +92,8 @@ export const Game_favorit = () => async (dispatch, getState) => {
         {
           params: { id: id },
           headers: {
-            "X-RapidAPI-Key":
-              "7ed3d33c1cmshbe8f8583a0efa6cp1629a1jsncf6bf4dabdb6",
-            "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
+            "X-RapidAPI-Key": apiKey,
+            "X-RapidAPI-Host": apiHost,
           },
         }
       );
