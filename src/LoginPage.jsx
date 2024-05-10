@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { login } from "./redux/actions/AuthAction";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
+import image from "../public/Image/bg.jpg";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -14,11 +15,7 @@ export default function Login() {
     <div className=" w-screen h-screen bg-cover flex justify-center items-center bg-[url('../public/Image/1161813.jpg')]">
       <div className=" backdrop-blur-[20px] bg-[#a9eefe]/10 rounded-lg flex w-[65%] relative">
         <div className=" flex-1">
-          <img
-            src="../public/Image/bg.jpg"
-            alt=""
-            className="w-full h-full rounded-bl-lg "
-          />
+          <img src={image} alt="" className="w-full h-full rounded-bl-lg " />
         </div>
         <div className="flex flex-col flex-1 justify-center items-center ">
           <div className="text-4xl font-bold text-[#dcf9fd] mb-6 text-center ">
