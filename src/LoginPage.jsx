@@ -77,14 +77,6 @@ export default function Login() {
           <div className=" flex justify-center gap-6 mb-4 mt-5 ">
             <GoogleLogin />
           </div>
-          <div className="absolute bottom-4 right-0 flex justify-end mr-4">
-            <button
-              className="bg-[#dcf9fd] text-[#101010] px-4 py-2 rounded-full font-semibold"
-              onClick={() => navigate("/")}
-            >
-              Kembali ke game
-            </button>
-          </div>
         </div>
       </div>
     </div>
