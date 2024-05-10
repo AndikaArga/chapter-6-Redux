@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
 import { RegisterUser } from "./redux/actions/AuthAction";
+import image from "../public/Image/baru.jpg";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -95,7 +96,7 @@ export default function Register() {
         </div>
         <div className=" flex-1">
           <img
-            src="../public/Image/baru.jpg"
+            src={image}
             alt=""
             className="w-full h-full rounded-br-lg rounded-tr-lg"
           />
