@@ -8,8 +8,8 @@ import image from "../public/Image/bg.jpg";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("testproduk1@binaracademy.org");
-  const [password, setPassword] = useState("Testproduk123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className=" w-screen h-screen bg-cover flex justify-center items-center bg-[url('../public/Image/1161813.jpg')]">
