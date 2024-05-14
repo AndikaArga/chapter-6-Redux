@@ -35,37 +35,37 @@ export default function Navbar() {
   }, [Token]);
 
   return (
-    <nav className=" bg-[#333333] flex justify-between items-center py-3 px-8  ">
-      <div className="flex items-center">
+    <nav className="bg-[#333333] flex justify-between items-center py-5 px-8">
+      <div className="flex items-center space-x-8">
         <button
-          className="text-white px-4 py-2 font-bold hover:text-yellow-400 transition-colors duration-300"
+          className="text-white font-bold hover:text-yellow-400 transition-colors duration-300"
           onClick={() => navigate("/")}
         >
           Game Zone
         </button>
         {token && (
           <button
-            className="text-white px-4 py-2 font-bold hover:text-yellow-400 transition-colors duration-300"
+            className="text-white font-bold hover:text-yellow-400 transition-colors duration-300"
             onClick={() => navigate("/Favorit")}
           >
             Favorite
           </button>
         )}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center space-x-4">
         {token === null ? (
           <button
             onClick={() => navigate("/Login")}
-            className="text-white px-4 py-2 font-bold hover:text-yellow-400 transition-colors duration-300"
+            className="text-white font-bold hover:text-yellow-400 transition-colors duration-300"
           >
             Login
           </button>
         ) : (
-          <div className="flex items-center">
-            <div className="text-white px-4 py-2 mr-4">{`Halo, ${nama}`}</div>
+          <div className="flex items-center space-x-4">
+            <div className="text-white">{`Halo, ${nama}`}</div>
             <button
               onClick={handleLogout}
-              className="text-white px-4 py-2 font-bold hover:text-yellow-400 transition-colors duration-300"
+              className="text-white font-bold hover:text-yellow-400 transition-colors duration-300"
             >
               Log out
             </button>

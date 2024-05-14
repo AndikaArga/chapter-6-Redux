@@ -26,8 +26,8 @@ export default function GameDetails() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-[#333333] to-[#222222] min-h-screen flex items-center justify-center">
-      <div className="container mx-auto px-4 py-8">
+    <div className="bg-[#222222] w-screen h-screen flex items-center justify-center">
+      <div className="container mx-auto px-4 py-8 w-[80%]">
         <div className="backdrop-blur-[20px] bg-[#444444]/75 shadow-lg rounded px-8 py-6 flex gap-8 max-lg:flex-col items-center">
           <div>
             <h2 className="text-2xl font-semibold text-white mb-4">
@@ -76,9 +76,7 @@ export default function GameDetails() {
               Publisher: {gameDetails?.publisher}
             </p>
             <p className="text-white mb-4">Genre: {gameDetails?.genre}</p>
-            <p className="text-white mb-4">
-              Platform: {gameDetails?.platform}
-            </p>
+            <p className="text-white mb-4">Platform: {gameDetails?.platform}</p>
             <p className="text-white mb-4">
               Release Date: {gameDetails?.release_date}
             </p>
