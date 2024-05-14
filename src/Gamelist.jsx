@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllGames, getPopularGames } from "./redux/actions/gameAction";
+import {
+  getAllGames,
+  getPopularGames,
+  getRelevanGame,
+} from "./redux/actions/gameAction";
 import { useNavigate } from "react-router-dom";
 import {
   removeFavorit,
@@ -9,143 +13,209 @@ import {
   setGameId,
 } from "./redux/Reducers/gameReducer";
 import { StarBorder, Star, WebAsset, Window } from "@mui/icons-material";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const calculateValue = (e) => {
+  if (e.id < 10) {
+    return "Rp " + (e.id * 100000).toLocaleString("id-ID");
+  } else if (e.id < 100) {
+    return "Rp " + (e.id * 10000).toLocaleString("id-ID");
+  } else {
+    return "Rp " + (e.id * 1000).toLocaleString("id-ID");
+  }
+};
 
 export default function Gamelist() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const token = useSelector((state) => {
-    return state?.user?.token;
-  });
+  const token = useSelector((state) => state?.user?.token);
+  const dataGame = useSelector((state) => state?.game?.games);
+  const dataPopular = useSelector((state) => state?.game?.gamespopular);
+  const dataRelevan = useSelector((state) => state?.game?.gamesrelevan);
 
-  const dataGame = useSelector((state) => {
-    return state?.game?.games;
-  });
-  const dataPopular = useSelector((state) => {
-    return state?.game?.gamespopular;
-  });
-  const Favorit = useSelector((state) => {
-    return state.game.gameFavorit;
-  });
-
+  const Favorit = useSelector((state) => state.game.gameFavorit);
 
   useEffect(() => {
     dispatch(getAllGames());
     dispatch(getPopularGames());
-  }, []);
+    dispatch(getRelevanGame());
+  }, [dispatch]);
+
+  const sliderSettings = {
+    infinite: false,
+    slidesToShow: 4,
+    speed: 1000,
+    slidesToScroll: 3,
+  };
+
+  if (!dataGame || dataGame.length === 0) {
+    return <div className="text-white">Loading...</div>;
+  }
 
   return (
-    <div className=" bg-transparent">
-      <div className="flex gap-8">
-        <div className="flex flex-col flex-grow gap-4">
-          <div className="text-2xl font-bold text-center rounded-md bg-[#333333]/75 text-white backdrop-blur-[20px]  py-2 shadow-lg">
-            <span className="text-yellow-400">New</span> Releases
-          </div>
-          {dataGame.slice(0, 8).map((e) => (
-            <div
-              key={e?.id}
-              onClick={(event) => {
-                if (event.target.tagName === "DIV") {
-                  dispatch(setGameId(e?.id));
-                  navigate("/GameDetails");
-                }
-              }}
-              className="backdrop-blur-[20px] bg-[#333333]/75 rounded-md overflow-hidden shadow-lg flex items-center transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer"
-            >
-              <div className="my-4 ml-6">
-                <img
-                  src={e.thumbnail}
-                  alt={e.title}
-                  className="object-cover w-full h-[100px]"
-                />
-              </div>
-              <div className="p-4 flex justify-between flex-grow">
-                <div>
-                  <p className="font-semibold text-md text-white">{e.title}</p>
-                  <p className="mt-2 inline-block text-sm bg-yellow-400 text-[#101010] px-2 py-1 rounded-md font-semibold">
-                    {e.genre}
-                  </p>
-                </div>
-              </div>
-              <div className=" flex mr-6 gap-4">
-                <div className="flex-grow text-end text-white hover:text-black">
+    <div>
+      <div className="text-2xl font-bold text-white">
+        <span className="text-yellow-400">Game</span> Baru
+      </div>
+      <Slider {...sliderSettings}>
+        {dataGame.map((e) => (
+          <div
+            key={e?.id}
+            onClick={(event) => {
+              const isStarIcon =
+                event.target.closest(".MuiSvgIcon-root") !== null;
+              if (!isStarIcon) {
+                dispatch(setGameId(e?.id));
+                navigate("/GameDetails");
+              }
+            }}
+            className=" p-4 hover:cursor-pointer"
+          >
+            <div className="my-4 mx-auto">
+              <img
+                src={e.thumbnail}
+                alt={e.title}
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+            <div className="flex flex-col ">
+              <div className=" flex justify-between">
+                <p className="font-semibold text-md text-white">{e.title}</p>
+                <span>
                   {e?.id &&
                     token &&
                     (Favorit.includes(e?.id) ? (
-                      <p
+                      <Star
                         className="text-yellow-500"
                         onClick={() => {
-                          dispatch(removeFavorit(e?.id)),
-                            dispatch(removeFavoritData(e?.id));
+                          dispatch(removeFavorit(e?.id));
+                          dispatch(removeFavoritData(e?.id));
                         }}
-                      >
-                        <Star />
-                      </p>
+                      />
                     ) : (
-                      <p
+                      <StarBorder
                         className="text-yellow-500"
                         onClick={() => dispatch(setFavoritGames(e?.id))}
-                      >
-                        <StarBorder />
-                      </p>
+                      />
                     ))}
-                </div>
-                <div className="flex-grow text-end  text-white">
-                  {e.platform.includes("PC") && (
-                    <div className=" text-yellow-500">
-                      <Window />
-                    </div>
-                  )}
-                  {e.platform === "Web Browser" && (
-                    <div className=" text-yellow-500">
-                      <WebAsset />
-                    </div>
-                  )}
-                </div>
+                </span>
               </div>
+              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+                {calculateValue(e)}
+              </p>
             </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-4">
-          <div className="text-2xl font-bold text-center rounded-md text-white backdrop-blur-[20px] bg-[#333333]/75 py-2 shadow-lg">
-            <span className="text-yellow-400">Most Played</span> Today
           </div>
-          <div className="flex flex-col flex-grow justify-between">
-            {dataPopular.slice(0, 5).map((game) => (
-              <div
-                key={game.id}
-                onClick={() => {
-                  dispatch(setGameId(game?.id));
-                  navigate("/GameDetails");
-                }}
-                className="rounded-md overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer"
-              >
-                <div className="relative">
-                  <img
-                    src={game.thumbnail}
-                    alt={game.title}
-                    className="object-cover w-full h-full"
-                  />
-                  <div className="absolute bottom-0 right-0 m-2">
-                    <div className="text-white">
-                      {game.platform.includes("PC") && (
-                        <div className=" text-yellow-500">
-                          <Window />
-                        </div>
-                      )}
-                      {game.platform === "Web Browser" && (
-                        <div className=" text-yellow-500">
-                          <WebAsset />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
+      </Slider>
+      <div className="text-2xl font-bold text-white">
+        <span className="text-yellow-400">Game</span> Terpopuler
       </div>
+      <Slider {...sliderSettings}>
+        {dataPopular.map((e) => (
+          <div
+            key={e?.id}
+            onClick={(event) => {
+              const isStarIcon =
+                event.target.closest(".MuiSvgIcon-root") !== null;
+              if (!isStarIcon) {
+                dispatch(setGameId(e?.id));
+                navigate("/GameDetails");
+              }
+            }}
+            className=" p-4 hover:cursor-pointer"
+          >
+            <div className="my-4 mx-auto">
+              <img
+                src={e.thumbnail}
+                alt={e.title}
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+            <div className="flex flex-col ">
+              <div className=" flex justify-between">
+                <p className="font-semibold text-md text-white">{e.title}</p>
+                <span>
+                  {e?.id &&
+                    token &&
+                    (Favorit.includes(e?.id) ? (
+                      <Star
+                        className="text-yellow-500"
+                        onClick={() => {
+                          dispatch(removeFavorit(e?.id));
+                          dispatch(removeFavoritData(e?.id));
+                        }}
+                      />
+                    ) : (
+                      <StarBorder
+                        className="text-yellow-500"
+                        onClick={() => dispatch(setFavoritGames(e?.id))}
+                      />
+                    ))}
+                </span>
+              </div>
+              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+                {calculateValue(e)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </Slider>
+      <div className="text-2xl font-bold text-white">
+        <span className="text-yellow-400">Rekomendasi</span> Untuk Anda
+      </div>
+      <Slider {...sliderSettings}>
+        {dataRelevan.map((e) => (
+          <div
+            key={e?.id}
+            onClick={(event) => {
+              const isStarIcon =
+                event.target.closest(".MuiSvgIcon-root") !== null;
+              if (!isStarIcon) {
+                dispatch(setGameId(e?.id));
+                navigate("/GameDetails");
+              }
+            }}
+            className=" p-4 hover:cursor-pointer"
+          >
+            <div className="my-4 mx-auto">
+              <img
+                src={e.thumbnail}
+                alt={e.title}
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+            <div className="flex flex-col ">
+              <div className=" flex justify-between">
+                <p className="font-semibold text-md text-white">{e.title}</p>
+                <span>
+                  {e?.id &&
+                    token &&
+                    (Favorit.includes(e?.id) ? (
+                      <Star
+                        className="text-yellow-500"
+                        onClick={() => {
+                          dispatch(removeFavorit(e?.id));
+                          dispatch(removeFavoritData(e?.id));
+                        }}
+                      />
+                    ) : (
+                      <StarBorder
+                        className="text-yellow-500"
+                        onClick={() => dispatch(setFavoritGames(e?.id))}
+                      />
+                    ))}
+                </span>
+              </div>
+              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+                {calculateValue(e)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 }

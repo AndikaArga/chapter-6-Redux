@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
 import { RegisterUser } from "./redux/actions/AuthAction";
-import image from "../public/Image/baru.jpg";
+import image from "/Image/baru.jpg";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function Register() {
   const [password, setPasword] = useState("");
 
   return (
-    <div className=" w-screen h-screen bg-cover flex justify-center items-center bg-[url('../public/Image/1161813.jpg')]">
+    <div className=" w-screen h-screen bg-cover flex justify-center items-center bg-[url('/Image/1161813.jpg')]">
       <div className=" backdrop-blur-[20px] bg-[#a9eefe]/10   rounded-lg flex w-[65%]">
         <div className="flex flex-col flex-1 justify-center items-center ">
           <div className="text-4xl font-bold text-[#E3E3E3] mb-6 text-center ">

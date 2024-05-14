@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   setAllgame,
   setPopularGames,
+  setRelevanGames,
   setgameDetail,
   setgameFavorit,
 } from "../Reducers/gameReducer";
@@ -49,6 +50,31 @@ export const getPopularGames = () => async (dispatch, getState) => {
     );
     // console.log("response", response.data);
     dispatch(setPopularGames(response.data));
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      alert(error.message);
+      return;
+    }
+    alert(error.message);
+  }
+};
+
+export const getRelevanGame = () => async (dispatch, getState) => {
+  try {
+    const response = await axios.get(
+      `https://free-to-play-games-database.p.rapidapi.com/api/games`,
+      {
+        params: {
+          "sort-by": "relevance",
+        },
+        headers: {
+          "X-RapidAPI-Key": apiKey,
+          "X-RapidAPI-Host": apiHost,
+        },
+      }
+    );
+    // console.log("response", response.data);
+    dispatch(setRelevanGames(response.data));
   } catch (error) {
     if (axios.isAxiosError(error)) {
       alert(error.message);

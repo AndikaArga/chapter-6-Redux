@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setTokenUser } from "./redux/Reducers/loginReducer";
-import gambar from "../public/Image/images.png"
+import gambar from "/Image/images.png"
 
 function GoogleLogin() {
   const navigate = useNavigate();
