@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllGames, getPopularGames } from "./redux/actions/gameAction";
+import {
+  getAllGames,
+  getPopularGames,
+  getRelevanGame,
+} from "./redux/actions/gameAction";
 import { useNavigate } from "react-router-dom";
 import {
   removeFavorit,
@@ -30,11 +34,14 @@ export default function Gamelist() {
   const token = useSelector((state) => state?.user?.token);
   const dataGame = useSelector((state) => state?.game?.games);
   const dataPopular = useSelector((state) => state?.game?.gamespopular);
+  const dataRelevan = useSelector((state) => state?.game?.gamesrelevan);
+
   const Favorit = useSelector((state) => state.game.gameFavorit);
 
   useEffect(() => {
     dispatch(getAllGames());
     dispatch(getPopularGames());
+    dispatch(getRelevanGame());
   }, [dispatch]);
 
   const sliderSettings = {
@@ -51,7 +58,7 @@ export default function Gamelist() {
   return (
     <div>
       <div className="text-2xl font-bold text-white">
-        <span className="text-yellow-400">New</span> Release
+        <span className="text-yellow-400">Game</span> Baru
       </div>
       <Slider {...sliderSettings}>
         {dataGame.map((e) => (
@@ -104,8 +111,111 @@ export default function Gamelist() {
         ))}
       </Slider>
       <div className="text-2xl font-bold text-white">
-        <span className="text-yellow-400">New</span> Release
+        <span className="text-yellow-400">Game</span> Terpopuler
       </div>
+      <Slider {...sliderSettings}>
+        {dataPopular.map((e) => (
+          <div
+            key={e?.id}
+            onClick={(event) => {
+              const isStarIcon =
+                event.target.closest(".MuiSvgIcon-root") !== null;
+              if (!isStarIcon) {
+                dispatch(setGameId(e?.id));
+                navigate("/GameDetails");
+              }
+            }}
+            className=" p-4 hover:cursor-pointer"
+          >
+            <div className="my-4 mx-auto">
+              <img
+                src={e.thumbnail}
+                alt={e.title}
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+            <div className="flex flex-col ">
+              <div className=" flex justify-between">
+                <p className="font-semibold text-md text-white">{e.title}</p>
+                <span>
+                  {e?.id &&
+                    token &&
+                    (Favorit.includes(e?.id) ? (
+                      <Star
+                        className="text-yellow-500"
+                        onClick={() => {
+                          dispatch(removeFavorit(e?.id));
+                          dispatch(removeFavoritData(e?.id));
+                        }}
+                      />
+                    ) : (
+                      <StarBorder
+                        className="text-yellow-500"
+                        onClick={() => dispatch(setFavoritGames(e?.id))}
+                      />
+                    ))}
+                </span>
+              </div>
+              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+                {calculateValue(e)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </Slider>
+      <div className="text-2xl font-bold text-white">
+        <span className="text-yellow-400">Rekomendasi</span> Untuk Anda
+      </div>
+      <Slider {...sliderSettings}>
+        {dataRelevan.map((e) => (
+          <div
+            key={e?.id}
+            onClick={(event) => {
+              const isStarIcon =
+                event.target.closest(".MuiSvgIcon-root") !== null;
+              if (!isStarIcon) {
+                dispatch(setGameId(e?.id));
+                navigate("/GameDetails");
+              }
+            }}
+            className=" p-4 hover:cursor-pointer"
+          >
+            <div className="my-4 mx-auto">
+              <img
+                src={e.thumbnail}
+                alt={e.title}
+                className="object-cover w-full h-full rounded-md"
+              />
+            </div>
+            <div className="flex flex-col ">
+              <div className=" flex justify-between">
+                <p className="font-semibold text-md text-white">{e.title}</p>
+                <span>
+                  {e?.id &&
+                    token &&
+                    (Favorit.includes(e?.id) ? (
+                      <Star
+                        className="text-yellow-500"
+                        onClick={() => {
+                          dispatch(removeFavorit(e?.id));
+                          dispatch(removeFavoritData(e?.id));
+                        }}
+                      />
+                    ) : (
+                      <StarBorder
+                        className="text-yellow-500"
+                        onClick={() => dispatch(setFavoritGames(e?.id))}
+                      />
+                    ))}
+                </span>
+              </div>
+              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+                {calculateValue(e)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 }

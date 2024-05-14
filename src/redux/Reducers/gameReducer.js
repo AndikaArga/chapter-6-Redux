@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   games: [],
   gamespopular: [],
+  gamesrelevan: [],
   gameFavorit: [],
   gameFavoritData: [],
   gameId: null,
@@ -18,6 +19,9 @@ const gameSlicer = createSlice({
     },
     setPopularGames: (state, action) => {
       state.gamespopular = action.payload;
+    },
+    setRelevanGames: (state, action) => {
+      state.gamesrelevan = action.payload;
     },
     setFavoritGames: (state, action) => {
       state.gameFavorit = [...state.gameFavorit, action.payload];
@@ -71,6 +75,7 @@ export const {
   setSearchKeyword,
   removeFavorit,
   clearFavoritGames,
+  setRelevanGames
 } = gameSlicer.actions;
 
 export default gameSlicer.reducer;

@@ -48,7 +48,15 @@ export default function Navbar() {
             className="text-white font-bold hover:text-yellow-400 transition-colors duration-300"
             onClick={() => navigate("/Favorit")}
           >
-            Favorite
+            Favorit
+          </button>
+        )}
+        {token && (
+          <button
+            className="text-white font-bold hover:text-yellow-400 transition-colors duration-300"
+            onClick={() => navigate("/Favorit")}
+          >
+            Loker
           </button>
         )}
       </div>
