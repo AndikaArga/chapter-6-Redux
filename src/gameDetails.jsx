@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailGame } from "./redux/actions/gameAction";
 import { useNavigate } from "react-router-dom";
+import { setBuy } from "./redux/Reducers/gameReducer";
 
 export default function GameDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const DataBuy = useSelector((state) => state.game.gameBuy);
   const gameDetails = useSelector((state) => {
     return state?.game?.gameDetail;
   });
@@ -14,16 +17,49 @@ export default function GameDetails() {
   });
 
   useEffect(() => {
-    dispatch(getDetailGame());
+    const fetchGameDetails = async () => {
+      setLoading(true);
+      await dispatch(getDetailGame());
+      setLoading(false);
+    };
+    fetchGameDetails();
   }, []);
 
-  const handlePlay = () => {
+  // const handlePlay = () => {
+  //   if (Token === null) {
+  //     alert("Silakan Login Terlebih Dahulu");
+  //   } else {
+  //     window.open(gameDetails?.game_url, "_blank");
+  //   }
+  // };
+  const calculateValue = (e) => {
+    if (e.id < 10) {
+      return "Rp " + (e.id * 100000).toLocaleString("id-ID");
+    } else if (e.id < 100) {
+      return "Rp " + (e.id * 10000).toLocaleString("id-ID");
+    } else {
+      return "Rp " + (e.id * 1000).toLocaleString("id-ID");
+    }
+  };
+
+  const handleBuy = async () => {
     if (Token === null) {
       alert("Silakan Login Terlebih Dahulu");
     } else {
-      window.open(gameDetails?.game_url, "_blank");
+      if (confirm(`Ingin membeli game ?`)) {
+        alert("Game berhasil dibeli");
+        await dispatch(setBuy(gameDetails?.id));
+      }
     }
   };
+
+  if (loading) {
+    return (
+      <div className="bg-[#222222] w-screen h-screen flex items-center justify-center">
+        <div className="text-white text-2xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#222222] w-screen h-screen flex items-center justify-center">
@@ -42,16 +78,23 @@ export default function GameDetails() {
               {Token === null ? (
                 <button
                   className="w-full bg-red-500 py-2 flex justify-center items-center rounded-md text-white font-bold text-sm"
-                  onClick={handlePlay}
+                  onClick={handleBuy}
                 >
                   Lock
                 </button>
+              ) : DataBuy.includes(gameDetails?.id) ? (
+                <button
+                  className="w-full bg-blue-500 py-2 flex justify-center items-center rounded-md text-white font-bold text-sm"
+                  onClick={() => navigate("/GameBuy")}
+                >
+                  Berangkas
+                </button>
               ) : (
                 <button
-                  className="bg-yellow-400 py-2 flex justify-center items-center rounded-md text-[#101010] font-bold w-full"
-                  onClick={handlePlay}
+                  className="w-full bg-blue-500 py-2 flex justify-center items-center rounded-md text-white font-bold text-sm"
+                  onClick={handleBuy}
                 >
-                  Play
+                  {calculateValue(gameDetails)}
                 </button>
               )}
             </div>
@@ -59,7 +102,7 @@ export default function GameDetails() {
               className="w-full text-center py-2 bg-[#333333] text-white mt-2 rounded-md"
               onClick={() => navigate("/")}
             >
-              Back
+              Kembali
             </button>
           </div>
           <div>

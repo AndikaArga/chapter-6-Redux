@@ -5,7 +5,8 @@ import Login from "./LoginPage";
 import UserPage from "./userPage";
 import Register from "./register";
 import FavoritBaru from "./FavoritBaru";
-
+import GameBuy from "./GameBuy";
+import History from "./History";
 
 export default function Route() {
   const router = createBrowserRouter([
@@ -27,11 +28,19 @@ export default function Route() {
     },
     {
       path: "/Register",
-      element: <Register/>,
+      element: <Register />,
+    },
+    {
+      path: "/GameBuy",
+      element: <GameBuy />,
+    },
+    {
+      path: "/History",
+      element: <History />,
     },
     {
       path: "/Favorit",
-      element: <FavoritBaru/>,
+      element: <FavoritBaru />,
     },
   ]);
 
