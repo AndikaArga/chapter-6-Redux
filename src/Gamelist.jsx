@@ -94,7 +94,7 @@ export default function Gamelist() {
                     token &&
                     (Favorit.includes(e?.id) ? (
                       <Star
-                        className="text-yellow-500"
+                        className="text-yellow-500 hover:cursor-default"
                         onClick={() => {
                           dispatch(removeFavorit(e?.id));
                           dispatch(removeFavoritData(e?.id));
@@ -102,7 +102,7 @@ export default function Gamelist() {
                       />
                     ) : (
                       <StarBorder
-                        className="text-yellow-500"
+                        className="text-yellow-500 hover:cursor-default"
                         onClick={() => dispatch(setFavoritGames(e?.id))}
                       />
                     ))}
