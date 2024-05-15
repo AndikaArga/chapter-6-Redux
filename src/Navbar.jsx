@@ -20,7 +20,6 @@ export default function Navbar() {
 
   const handleLogout = () => {
     if (confirm(`Ingin Log-out?`)) {
-      dispatch(setDataUser([]));
       dispatch(setTokenUser(null));
       dispatch(clearFavoritGames());
       dispatch(clearFavoritGamesData());
