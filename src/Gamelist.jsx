@@ -37,11 +37,10 @@ export default function Gamelist() {
   const dataPopular = useSelector((state) => state?.game?.gamespopular);
   const dataRelevan = useSelector((state) => state?.game?.gamesrelevan);
 
-  const Favorit = useSelector((state) => state.game.gameFavorit);
+  const Favorit = useSelector((state) => {
+    return state.game.gameFavorit;
+  });
   const DataBuy = useSelector((state) => state.game.gameBuy);
-  const Data22 = useSelector((state) =>
-    console.log("state", state.game.gameHistory)
-  );
 
   useEffect(() => {
     dispatch(getAllGames());
