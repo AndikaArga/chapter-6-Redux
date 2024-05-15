@@ -6,6 +6,10 @@ const initialState = {
   gamesrelevan: [],
   gameFavorit: [],
   gameFavoritData: [],
+  gameHistory: [],
+  gameHistoryData: [],
+  gameBuy: [],
+  gameBuyData: [],
   gameId: null,
   gameDetail: null,
 };
@@ -16,6 +20,42 @@ const gameSlicer = createSlice({
   reducers: {
     setAllgame: (state, action) => {
       state.games = action.payload;
+    },
+    setBuy: (state, action) => {
+      state.gameBuy = [...state.gameBuy, action.payload];
+    },
+    setBuyData: (state, action) => {
+      const gameToAdd = action.payload;
+      const isGameExist = state.gameBuyData.some(
+        (game) => game.id === gameToAdd.id
+      );
+      if (!isGameExist) {
+        state.gameBuyData = [...state.gameBuyData, action.payload];
+      }
+    },
+    clearBuy: (state) => {
+      state.gameBuy = [];
+    },
+    clearBuyData: (state) => {
+      state.gameBuyData = [];
+    },
+    setHistory: (state, action) => {
+      state.gameHistory = [...state.gameHistory, action.payload];
+    },
+    setHistoryData: (state, action) => {
+      const gameToAdd = action.payload;
+      const isGameExist = state.gameHistoryData.some(
+        (game) => game.id === gameToAdd.id
+      );
+      if (!isGameExist) {
+        state.gameHistoryData = [...state.gameHistoryData, action.payload];
+      }
+    },
+    clearHistory: (state) => {
+      state.gameHistory = [];
+    },
+    clearHistoryGamesData: (state) => {
+      state.gameHistoryData = [];
     },
     setPopularGames: (state, action) => {
       state.gamespopular = action.payload;
@@ -75,7 +115,15 @@ export const {
   setSearchKeyword,
   removeFavorit,
   clearFavoritGames,
-  setRelevanGames
+  setRelevanGames,
+  setBuy,
+  setBuyData,
+  setHistory,
+  setHistoryData,
+  clearHistory,
+  clearHistoryGamesData,
+  clearBuy,
+  clearBuyData,
 } = gameSlicer.actions;
 
 export default gameSlicer.reducer;

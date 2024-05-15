@@ -11,8 +11,9 @@ import {
   removeFavoritData,
   setFavoritGames,
   setGameId,
+  setHistory,
 } from "./redux/Reducers/gameReducer";
-import { StarBorder, Star, WebAsset, Window } from "@mui/icons-material";
+import { StarBorder, Star, Inventory2 } from "@mui/icons-material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -37,6 +38,10 @@ export default function Gamelist() {
   const dataRelevan = useSelector((state) => state?.game?.gamesrelevan);
 
   const Favorit = useSelector((state) => state.game.gameFavorit);
+  const DataBuy = useSelector((state) => state.game.gameBuy);
+  const Data22 = useSelector((state) =>
+    console.log("state", state.game.gameHistory)
+  );
 
   useEffect(() => {
     dispatch(getAllGames());
@@ -69,6 +74,7 @@ export default function Gamelist() {
                 event.target.closest(".MuiSvgIcon-root") !== null;
               if (!isStarIcon) {
                 dispatch(setGameId(e?.id));
+                dispatch(setHistory(e?.id));
                 navigate("/GameDetails");
               }
             }}
@@ -103,8 +109,17 @@ export default function Gamelist() {
                     ))}
                 </span>
               </div>
-              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+              <p className="mt-2 text-sm text-yellow-500 font-semibold flex justify-between items-center">
                 {calculateValue(e)}
+                {DataBuy.includes(e?.id) && (
+                  <Inventory2
+                    className="text-gray-200"
+                    style={{ fontSize: "20px" }}
+                    onClick={() => {
+                      navigate("/GameBuy");
+                    }}
+                  />
+                )}
               </p>
             </div>
           </div>
@@ -122,6 +137,7 @@ export default function Gamelist() {
                 event.target.closest(".MuiSvgIcon-root") !== null;
               if (!isStarIcon) {
                 dispatch(setGameId(e?.id));
+                dispatch(setHistory(e?.id));
                 navigate("/GameDetails");
               }
             }}
@@ -156,8 +172,17 @@ export default function Gamelist() {
                     ))}
                 </span>
               </div>
-              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+              <p className="mt-2 text-sm text-yellow-500 font-semibold flex justify-between items-center">
                 {calculateValue(e)}
+                {DataBuy.includes(e?.id) && (
+                  <Inventory2
+                    className="text-gray-200"
+                    style={{ fontSize: "20px" }}
+                    onClick={() => {
+                      navigate("/GameBuy");
+                    }}
+                  />
+                )}
               </p>
             </div>
           </div>
@@ -175,6 +200,7 @@ export default function Gamelist() {
                 event.target.closest(".MuiSvgIcon-root") !== null;
               if (!isStarIcon) {
                 dispatch(setGameId(e?.id));
+                dispatch(setHistory(e?.id));
                 navigate("/GameDetails");
               }
             }}
@@ -209,8 +235,17 @@ export default function Gamelist() {
                     ))}
                 </span>
               </div>
-              <p className="mt-2 inline-block text-sm text-yellow-500 font-semibold">
+              <p className="mt-2 text-sm text-yellow-500 font-semibold flex justify-between items-center">
                 {calculateValue(e)}
+                {DataBuy.includes(e?.id) && (
+                  <Inventory2
+                    className="text-gray-200"
+                    style={{ fontSize: "20px" }}
+                    onClick={() => {
+                      navigate("/GameBuy");
+                    }}
+                  />
+                )}
               </p>
             </div>
           </div>

@@ -1,6 +1,8 @@
 import axios from "axios";
 import {
   setAllgame,
+  setBuyData,
+  setHistoryData,
   setPopularGames,
   setRelevanGames,
   setgameDetail,
@@ -86,7 +88,6 @@ export const getRelevanGame = () => async (dispatch, getState) => {
 
 export const getDetailGame = () => async (dispatch, getState) => {
   try {
-    dispatch(setgameDetail(null));
     const id = getState().game?.gameId;
     const response = await axios.get(
       `https://free-to-play-games-database.p.rapidapi.com/api/game`,
@@ -124,6 +125,56 @@ export const Game_favorit = () => async (dispatch, getState) => {
         }
       );
       dispatch(setgameFavorit(response.data));
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error:", error.message);
+    } else {
+      console.error("Error:", error);
+    }
+  }
+};
+
+export const Game_History = () => async (dispatch, getState) => {
+  const game_History = getState().game.gameHistory;
+  try {
+    for (const id of game_History) {
+      const response = await axios.get(
+        `https://free-to-play-games-database.p.rapidapi.com/api/game`,
+        {
+          params: { id: id },
+          headers: {
+            "X-RapidAPI-Key": apiKey,
+            "X-RapidAPI-Host": apiHost,
+          },
+        }
+      );
+      dispatch(setHistoryData(response.data));
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Error:", error.message);
+    } else {
+      console.error("Error:", error);
+    }
+  }
+};
+
+export const Game_Buy = () => async (dispatch, getState) => {
+  const game_Buy = getState().game.gameBuy;
+  try {
+    for (const id of game_Buy) {
+      const response = await axios.get(
+        `https://free-to-play-games-database.p.rapidapi.com/api/game`,
+        {
+          params: { id: id },
+          headers: {
+            "X-RapidAPI-Key": apiKey,
+            "X-RapidAPI-Host": apiHost,
+          },
+        }
+      );
+      dispatch(setBuyData(response.data));
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {

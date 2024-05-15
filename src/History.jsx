@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
-import { Game_favorit } from "./redux/actions/gameAction";
+import { Game_Buy, Game_History } from "./redux/actions/gameAction";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setGameId } from "./redux/Reducers/gameReducer";
 import { WebAsset, Window } from "@mui/icons-material";
+import Navbar from "./Navbar";
 
-export default function Favorit() {
+export default function History() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const Data = useSelector((state) => {
-    return state?.game.gameFavoritData;
+    const gameHistoryData = state?.game.gameHistoryData;
+    return [...gameHistoryData].reverse();
   });
 
   const calculateValue = (e) => {
@@ -24,15 +26,16 @@ export default function Favorit() {
   };
 
   useEffect(() => {
-    dispatch(Game_favorit());
+    dispatch(Game_History());
   }, []);
 
   return (
     <div className="bg-[#222222] w-screen h-screen bg-cover overflow-y-auto">
+      <Navbar />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-[80%] mt-4 mx-auto">
         {Data.length === 0 ? (
-          <div className="text-white font-semibold text-lg">
-            Masih belum ada game favorit
+          <div className="text-white font-semibold text-lg flex">
+            Belum ada yang yang dilihat
           </div>
         ) : (
           Data.map((game) => (
@@ -41,7 +44,8 @@ export default function Favorit() {
               onClick={() => {
                 dispatch(setGameId(game?.id));
                 navigate("/GameDetails");
-              }} className=" hover:cursor-pointer"
+              }}
+              className=" hover:cursor-pointer"
             >
               <div className="flex-1">
                 <img
