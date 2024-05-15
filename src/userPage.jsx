@@ -10,7 +10,6 @@ export default function UserPage() {
   useEffect(() => {
     if (Token === null) {
       localStorage.clear();
-      sessionStorage.clear();
     }
   }, [Token]);
 
