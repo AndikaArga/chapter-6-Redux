@@ -4,16 +4,6 @@ import Gamelist from "./Gamelist";
 import { useSelector } from "react-redux";
 
 export default function UserPage() {
-  const Token = useSelector((state) => {
-    return state?.user?.token;
-  });
-
-  useEffect(() => {
-    if (Token === null) {
-      localStorage.clear();
-    }
-  }, [Token]);
-
   return (
     <div className="w-screen h-screen bg-cover bg-[#222222] overflow-y-auto">
       <div className="fixed top-0 w-full z-50">
