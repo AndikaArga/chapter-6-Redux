@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import Gamelist from "./Gamelist";
+import { useSelector } from "react-redux";
 
 export default function UserPage() {
   const Token = useSelector((state) => {
